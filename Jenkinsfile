@@ -1,6 +1,12 @@
 podTemplate(label: 'docker-build', 
   containers: [
     containerTemplate(
+      name: 'jnlp',
+      image: 'jenkins/inbound-agent',
+      args: '${computer.jnlpmac} ${computer.name} -noCertificateCheck',  // -noCertificateCheck 옵션 추가
+      ttyEnabled: true
+    ),
+    containerTemplate(
       name: 'git',
       image: 'alpine/git',
       command: 'cat',
