@@ -15,6 +15,10 @@ podTemplate(label: 'docker-build',
   ],
   volumes: [ 
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'), 
+    secretVolume(secretName: 'jenkins-tls', mountPath: '/certs')
+  ],
+  envVars: [
+    envVar(key: 'JAVA_OPTS', value: '-Djavax.net.ssl.trustStore=/certs/tls.crt -Djavax.net.ssl.trustStorePassword=changeit')
   ]
 ) {
     node('docker-build') {
